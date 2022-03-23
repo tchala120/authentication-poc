@@ -1,0 +1,21 @@
+overwrite: true
+schema: "src/graphQL/generated/schema.graphql"
+documents: "src/graphQL/documents/**/*.gql"
+generates:
+  src/graphQL/generated/operations.ts:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-react-apollo"
+    config:
+      avoidOptionals:
+        field: true
+      maybeValue: T
+      skipTypename: true
+      namingConvention:
+        typeNames: change-case-all#pascalCase
+        enumValues: change-case-all#pascalCase
+      skipTypeNameForRoot: true
+      flattenGeneratedTypes: true
+      useTypeImports: true
+      addOperationExport: true
