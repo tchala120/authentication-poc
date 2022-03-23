@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@apollo/client": "^3.5.10",
+    "@graphql-codegen/cli": "^2.6.2",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.0.0",
     "@testing-library/user-event": "^13.2.1",
@@ -10,9 +12,12 @@
     "@types/node": "^16.7.13",
     "@types/react": "^17.0.20",
     "@types/react-dom": "^17.0.9",
+    "antd": "^4.19.3",
+    "graphql": "^16.3.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "5.0.0",
+    "styled-components": "^5.3.3",
     "typescript": "^4.4.2",
     "web-vitals": "^2.1.0"
   },
@@ -21,7 +26,12 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "format:project": "prettier --write src/**/*",
+    "format:operations": "prettier --write src/graphQL/generated/operations.ts",
+    "codegen:schema": "DOTENV_CONFIG_PATH=./.env.local graphql-codegen -r dotenv/config --config codegen.json",
+    "codegen:operations": "graphql-codegen --config codegen.yml && yarn format:operations",
+    "codegen": "graphql-codegen --config codegen.yml"
   },
   "eslintConfig": {
     "extends": [
@@ -42,11 +52,17 @@
     ]
   },
   "devDependencies": {
+    "@types/styled-components": "^5.1.24",
     "husky": "^7.0.4",
     "lint-staged": "^12.3.7",
-    "prettier": "2.6.0"
+    "prettier": "2.6.0",
+    "@graphql-codegen/typescript": "2.4.8",
+    "@graphql-codegen/typescript-operations": "2.3.5",
+    "@graphql-codegen/typescript-react-apollo": "3.2.11",
+    "@graphql-codegen/introspection": "2.1.1",
+    "@graphql-codegen/cli": "2.6.2"
   },
   "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx,gql,graphql,css}": "prettier --write --ignore-unknown"
+    "src/**/*.{js,jsx,ts,tsx,gql,graphql,css,yml,yaml}": "yarn format:project"
   }
 }
