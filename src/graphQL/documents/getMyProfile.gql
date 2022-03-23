@@ -1,0 +1,12 @@
+query getMyProfile {
+  getMyProfile {
+    payload {
+      _id
+      email {
+        value
+        verifyStatus
+      }
+      attribute
+    }
+  }
+}
