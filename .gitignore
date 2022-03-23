@@ -21,3 +21,7 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# GraphQL Codegen
+src/graphQL/generated/*
+!src/graphQL/generated/schema.graphql
