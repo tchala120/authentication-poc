@@ -1,0 +1,2371 @@
+directive @cacheControl(
+  maxAge: Int
+  scope: CacheControlScope
+) on FIELD_DEFINITION | INTERFACE | OBJECT
+
+enum CacheControlScope {
+  PRIVATE
+  PUBLIC
+}
+
+scalar Date
+
+enum ENUM_APP_STATUS {
+  ACTIVE
+  INACTIVE
+}
+
+enum ENUM_AUTH_TYPE {
+  AUTH_CODE
+  AUTH_TOKEN
+}
+
+enum ENUM_CATEGORY_STATUS {
+  ACTIVE
+  INACTIVE
+}
+
+enum ENUM_CONFIG_PRIVACY {
+  """
+  ไม่ระบุตัวตน
+  """
+  ANONYMOUS
+
+  """
+  ยืนยันตัวตน
+  """
+  AUTH_USER
+
+  """
+  ระบบ
+  """
+  SYSTEM
+}
+
+enum ENUM_CREDENTIAL_TYPE {
+  RESOURCE_ADMIN
+  RESOURCE_OWNER
+}
+
+enum ENUM_DATA_SECURITY {
+  NONE
+  ORGANIZATION
+  PARENT_CHILD
+  SYSTEM
+  USER
+}
+
+enum ENUM_GATEWAY_API_TYPE {
+  GQL
+  REST
+}
+
+enum ENUM_GATEWAY_METHOD {
+  DELETE
+  GET
+  MUTATION
+  POST
+  PUT
+  QUERY
+}
+
+enum ENUM_GATEWAY_RES_TYPE {
+  JSON
+  STRING
+}
+
+enum ENUM_GATEWAY_STATUS {
+  DISABLE
+  ENABLED
+}
+
+enum ENUM_GATEWAY_USER_ROLE {
+  ANINYMOUS
+  RESOURCE_ADMIN
+  RESOURCE_OWNER
+  SYSTEM_ADMIN
+}
+
+enum ENUM_GENERATE_KEY_CAPITALIZATION {
+  LOWERCASE
+  UPPERCASE
+}
+
+enum ENUM_INVITE_STATUS {
+  ACTIVE
+  DELETED
+  INACTIVE
+}
+
+enum ENUM_IS {
+  NO
+  YES
+}
+
+enum ENUM_LRLE_TYPE {
+  RESOURCE_ADMIN
+  RESOURCE_OWNER
+  SYSTEM_ADMIN
+}
+
+enum ENUM_NOTIFICATION_CHANNEL {
+  EMAIL
+  MOBILE_NOTIFICATION
+  SMS
+}
+
+enum ENUM_NOTIFICATION_IS_REQUIRED {
+  NO
+  YES
+}
+
+enum ENUM_NOTIFICATION_MESSAGE_CHANNEL_CONDITION {
+  ALL_USER
+  CUSTOM_APPLICATION
+  CUSTOM_EMAIL
+  CUSTOM_PHONE_NUMBER
+  USER_ROLE
+  USER_SELECTED
+}
+
+enum ENUM_NOTIFICATION_MESSAGE_CHANNEL_KEY {
+  APPLICATION
+  EMAIL
+  SMS
+}
+
+enum ENUM_NOTIFICATION_MESSAGE_SENDTYPE {
+  SYSTEM
+  USER
+}
+
+enum ENUM_NOTIFICATION_MESSAGE_STATUS {
+  CANCELLED
+  PREPARE
+  SENT
+}
+
+enum ENUM_NOTIFICATION_READ {
+  NO
+  YES
+}
+
+enum ENUM_NOTIFICATION_USER_TYPE {
+  ADMIN
+  CLIENT
+  SYSTEM
+}
+
+enum ENUM_ORGANIZATION_APPROVAL_STATUS {
+  EDITABLE
+  LOCKED
+}
+
+enum ENUM_ORGANIZATION_STATUS {
+  APPROVED
+  BLOCKED
+  CLOSED
+  DECLINED
+  NEED_MORE_INFORMATION
+  PREPARING
+  REJECTED
+  REVIEWING
+  SUSPENDED
+}
+
+enum ENUM_ROLE_APROVAL_ATTRIBUTE_STSTUS {
+  EDITABLE
+  LOCKED
+}
+
+enum ENUM_RUNNING_NUMBER {
+  X
+  XX
+  XXX
+  XXXX
+  XXXXX
+}
+
+enum ENUM_RUNNING_NUMBER_DATEFORMAT {
+  YYMM
+  YYYYMM
+  YYYYMMDD
+  YYYYMMDDhhmmss
+}
+
+enum ENUM_S3_ACL {
+  PRIVATE
+  PUBLIC
+}
+
+enum ENUM_SERVICE_ENDPOIN_TYPE {
+  GQL
+  REST
+}
+
+enum ENUM_SYNC_SERVICE {
+  FAILED
+  SUCCESS
+}
+
+enum ENUM_THEME_DEFAULT_STATUS {
+  NO
+  YES
+}
+
+enum ENUM_THEME_REPLACEABLE_STATUS {
+  NO
+  YES
+}
+
+enum ENUM_THEME_STATUS {
+  ACTIVE
+  INACTIVE
+}
+
+enum ENUM_THEME_TYPE {
+  ADMIN
+  CLIENT
+}
+
+enum ENUM_USABILITY {
+  DISABLE
+  ENABLED
+}
+
+enum ENUM_USER_ROLE_STATUS {
+  APPROVED
+  BLOCKED
+  DECLINED
+  PREPARING
+  REVIEWING
+}
+
+enum ENUM_VERIFY_STATUS {
+  NOT_VERIFY
+  VERIFIED
+}
+
+type File {
+  encoding: String!
+  filename: String!
+  mimetype: String!
+}
+
+scalar FileUpload
+
+type GET_APP_BY_EMAIL {
+  code: String
+  message: String
+  payload: [GET_APP_BY_EMAIL_CREDENTIAL_PAYLOAD]
+}
+
+type GET_APP_BY_EMAIL_CREDENTIAL_PAYLOAD {
+  app: TYPE_APP_SCHEMA
+  credential: GET_APP_BY_EMAIL_CREDENTIAL_SCHEMA
+}
+
+type GET_APP_BY_EMAIL_CREDENTIAL_SCHEMA {
+  credentialKey: String
+  name: String
+  status: ENUM_APP_STATUS
+  type: ENUM_CREDENTIAL_TYPE
+}
+
+type GET_APP_CREDENTIAL_EXPIRATION {
+  access: String
+  refresh: String
+}
+
+type GET_APP_CREDENTIAL_HOST {
+  code: String
+  message: String
+  payload: GET_APP_BY_EMAIL_CREDENTIAL_PAYLOAD
+}
+
+type GET_APP_CREDENTIAL_LIST {
+  credentialKey: String
+  name: String
+  type: String
+}
+
+type HOORAY_SERVER_SERVICE_INFO {
+  featureKeys: [HOORAY_SERVER_SERVICE_INFO_FEATURE]
+  graphqlEndpointAdmin: String
+  graphqlEndpointClient: String
+  graphqlEndpointSuperAdmin: String
+  logo: String
+  methodUpdate: String
+  name: String
+  permissions: [HOORAY_SERVER_SERVICE_INFO_PERMISSION]
+  restEndpointAdmin: String
+  restEndpointClient: String
+  restEndpointSuperAdmin: String
+  serviceKey: String
+}
+
+type HOORAY_SERVER_SERVICE_INFO_FEATURE {
+  description: String
+  enable: Boolean
+  key: String
+}
+
+type HOORAY_SERVER_SERVICE_INFO_PERMISSION {
+  code: [String]
+  defaultCode: String
+  description: String
+  permissionName: String
+}
+
+input INPUT_ACTIVE {
+  isActive: Boolean!
+}
+
+input INPUT_ADD_EMAIL {
+  email: String
+}
+
+input INPUT_ADMIN {
+  attribute: JSON
+  email: String!
+}
+
+input INPUT_APP_FORM {
+  appKey: String!
+  attribute: JSON
+  name: String!
+  status: ENUM_APP_STATUS
+}
+
+input INPUT_ATTRIBUTE {
+  _id: ID
+  key: String
+  value: String
+}
+
+input INPUT_CATEGORY {
+  name: String
+  status: ENUM_CATEGORY_STATUS
+}
+
+input INPUT_CONFIG_FORM {
+  configKey: String
+  configName: String
+  isGlobal: Boolean
+  privacy: ENUM_CONFIG_PRIVACY
+  relatedConfig: [String]
+  value: JSON
+}
+
+input INPUT_CREATE_SERVICE {
+  endpointType: ENUM_SERVICE_ENDPOIN_TYPE!
+  serviceKey: String!
+  systemEndpoint: String!
+}
+
+input INPUT_CREDENTIAL_FORM {
+  credentialKey: String
+  expiration: INPUT_EXPIRATION
+  hostList: [String]
+  isAdminCredential: ENUM_IS
+  name: String
+  secretKey: String
+  status: ENUM_APP_STATUS
+  type: ENUM_CREDENTIAL_TYPE
+}
+
+input INPUT_CREDENTIAL_FORM_UPDATE {
+  expiration: INPUT_EXPIRATION
+  hostList: [String]
+  name: String
+  status: ENUM_APP_STATUS
+  type: ENUM_CREDENTIAL_TYPE
+}
+
+input INPUT_DATA_SECURITY_FORM {
+  assign: ENUM_DATA_SECURITY!
+  assignToParent: ENUM_IS!
+  create: ENUM_DATA_SECURITY!
+  delete: ENUM_DATA_SECURITY!
+  name: String!
+  read: ENUM_DATA_SECURITY!
+  securityKey: String!
+  write: ENUM_DATA_SECURITY!
+}
+
+input INPUT_EMAIL_REGISTER_INPUT {
+  attribute: JSON
+  confirmPassword: String!
+  email: String!
+  inviteCode: String
+  password: String!
+  roleKey: String
+}
+
+input INPUT_EXPIRATION {
+  access: String
+  refresh: String
+}
+
+input INPUT_FEATURE_FORM {
+  config: JSON
+  featureKey: String!
+}
+
+input INPUT_FILTER {
+  key: String
+  value: String
+}
+
+input INPUT_FILTER_DATE {
+  endDate: String
+  startDate: String
+}
+
+input INPUT_FIND_DATA {
+  filter: JSON
+  findManyById: [ID]
+  findOneById: ID
+  pagination: INPUT_PAGINATION
+  query: JSON
+  search: JSON
+  sort: JSON
+}
+
+input INPUT_GATEWAY {
+  apiType: ENUM_GATEWAY_API_TYPE
+  destination: [String]
+  endpont: String
+  header: JSON
+  key: String
+  method: ENUM_GATEWAY_METHOD
+  name: String
+  queryString: JSON
+  resType: ENUM_GATEWAY_RES_TYPE
+  schema: JSON
+  source: [String]
+  status: ENUM_GATEWAY_STATUS
+  userRole: ENUM_GATEWAY_USER_ROLE
+  variable: JSON
+}
+
+input INPUT_GENERATE_RUNNING_NUMBER {
+  runningKey: String
+}
+
+input INPUT_LOCALE_TEXT_FORM {
+  attributes: JSON
+  dataKey: String!
+  locale: String!
+  orgKey: String
+  text: String!
+}
+
+input INPUT_LOGIN_AUTH_CODE {
+  email: String!
+  password: String!
+  redirectUrl: String!
+}
+
+input INPUT_MASTER_DATA {
+  attributes: JSON
+  dataKey: String!
+  locale: String!
+  parent: String
+  text: String!
+}
+
+input INPUT_NOTIFICATION {
+  attribute: JSON
+  content: String
+  icon: String
+  title: String
+  type: ENUM_NOTIFICATION_USER_TYPE
+}
+
+input INPUT_NOTIFICATION_DATA_KEY {
+  dataKey: String
+  defaultValue: String
+  isRequired: ENUM_NOTIFICATION_IS_REQUIRED
+}
+
+input INPUT_NOTIFICATION_MESSAGE {
+  content: String
+  title: String
+}
+
+input INPUT_NOTIFICATION_MESSAGE_CHANNEL {
+  condition: ENUM_NOTIFICATION_MESSAGE_CHANNEL_CONDITION!
+  key: ENUM_NOTIFICATION_MESSAGE_CHANNEL_KEY!
+}
+
+input INPUT_NUMBER_ATTRIBUTE {
+  _id: ID
+  key: String
+  value: Number
+}
+
+input INPUT_ORGANIZATION_APPROVAL_FORM {
+  approvalAttribute: JSON
+  orgKey: String!
+}
+
+input INPUT_ORGANIZATION_FORM {
+  address: JSON
+  attribute: JSON
+  categoryList: [ID]
+  contactEmailList: [String]
+  contactName: String
+  location: INPUT_ORGANIZATION_LOCATION
+  name: String
+  orgKey: String
+  parentOrgKey: String
+}
+
+input INPUT_ORGANIZATION_LOCAL_LIST {
+  dataKey: String
+  masterKey: String
+}
+
+input INPUT_ORGANIZATION_LOCATION {
+  coordinates: [Number]
+}
+
+input INPUT_ORGANIZATION_MASTER_DETAIL_LIST {
+  dataKey: String
+  masterKey: String
+}
+
+input INPUT_ORGANIZATION_TAG_LIST {
+  masterKey: String
+  tagKey: String
+}
+
+input INPUT_ORGANIZATION_UPDATE {
+  address: JSON
+  attribute: JSON
+  categoryList: [ID]
+  contactEmailList: [String]
+  contactName: String
+  location: INPUT_ORGANIZATION_LOCATION
+  name: String
+  orgKey: String
+  parentOrgKey: String
+}
+
+input INPUT_ORG_ADMIN_REGISTER_INPUT {
+  attribute: JSON
+  confirmPassword: String!
+  email: String!
+  password: String!
+  verifyToken: String
+}
+
+input INPUT_ORG_APPROVAL_ATTRIBUTE_STATUS {
+  note: String
+  orgKey: String!
+  status: ENUM_ORGANIZATION_APPROVAL_STATUS!
+}
+
+input INPUT_ORG_STATUS {
+  note: String
+  orgKey: String!
+  status: ENUM_ORGANIZATION_STATUS!
+}
+
+input INPUT_O_AUTH_FORM {
+  loginStatus: ENUM_USABILITY
+  reauthentication: ENUM_USABILITY
+  redirectUrlList: [String]
+}
+
+input INPUT_PAGINATION {
+  limit: Int
+  page: Int
+}
+
+input INPUT_PERMISSION_FORM {
+  code: [String!]
+  permissionKey: String!
+  scopeList: [String!]
+}
+
+input INPUT_PERMISSION_ROLE {
+  code: String!
+  permissionName: String!
+  scpes: [String]
+}
+
+input INPUT_REQUEST_OTP {
+  countryCode: String!
+  phoneNumber: Number!
+}
+
+input INPUT_ROLE_APPROVAL_ATTRIBUTE_STATUS {
+  note: String
+  roleKey: String!
+  status: ENUM_ROLE_APROVAL_ATTRIBUTE_STSTUS
+  userId: String!
+}
+
+input INPUT_ROLE_FROM {
+  attribute: JSON
+  isDefault: ENUM_IS
+  isInvite: ENUM_IS
+  isReplaceable: ENUM_IS
+  name: String
+  needApproval: ENUM_IS
+  regisable: ENUM_IS
+  roleKey: String
+  roleType: ENUM_LRLE_TYPE
+  status: ENUM_APP_STATUS
+  userField: [JSON]
+}
+
+input INPUT_RUNNING_NUMBER {
+  attribute: JSON
+  formatDate: ENUM_RUNNING_NUMBER_DATEFORMAT
+  lastText: String
+  name: String
+  numberRunning: ENUM_RUNNING_NUMBER
+  runningKey: String
+  text: String
+}
+
+input INPUT_S3_PUT_OBJECT_SIGNED_URL {
+  acl: ENUM_S3_ACL
+  contentType: String
+  objectName: String
+  path: String
+}
+
+input INPUT_SCHEMA_CUSTOM_MENU {
+  actionColor: String
+  icon: String
+  menuKey: String
+  permissionList: [INPUT_SCHEMA_CUSTOM_MENU_PERMISSION_LIST]
+  status: ENUM_USABILITY
+  target: String
+  title: JSON
+  url: String
+}
+
+input INPUT_SCHEMA_CUSTOM_MENU_PERMISSION_LIST {
+  code: [String]
+  permissionKey: String
+}
+
+input INPUT_SCMEMA_NOTIFICATION_TEMPLATE {
+  channel: ENUM_NOTIFICATION_CHANNEL
+  dataKeyList: [INPUT_NOTIFICATION_DATA_KEY]
+  locale: String
+  templateKey: String!
+  templateValue: String!
+  title: String
+}
+
+input INPUT_SEARCH {
+  condition: String
+  searchAttribute: [INPUT_SEARCH_ATTRIBUTE]
+}
+
+input INPUT_SEARCH_ATTRIBUTE {
+  key: String
+  value: String
+}
+
+input INPUT_SENDER_LIST {
+  email: String
+  name: String
+}
+
+input INPUT_SEND_MAIL_FORM {
+  email: [String!]
+  name: String
+  subject: String
+  text: String!
+}
+
+input INPUT_SMTP_FORM {
+  host: String
+  password: String
+  port: Number
+  securedConnection: Boolean
+  senderEmail: String
+  senderName: String
+  username: String
+}
+
+input INPUT_THEME_FORM {
+  color: JSON
+  credentialKey: String
+  custom: JSON
+  image: JSON
+  isDefault: ENUM_THEME_DEFAULT_STATUS
+  isReplaceable: ENUM_THEME_REPLACEABLE_STATUS
+  name: String!
+  status: ENUM_THEME_STATUS!
+  text: JSON
+  themeKey: String!
+  themeType: ENUM_THEME_TYPE
+}
+
+input INPUT_THEME_FORM_COLOR {
+  navAuthBg: String
+  navAuthText: String
+  navBg: String
+  navText: String
+  primary: String
+  secondary: String
+  titleText: String
+}
+
+input INPUT_THEME_FORM_IMAGE {
+  favIcon: String
+  navAuthCollapsedLogo: String
+  navAuthLogo: String
+  navLogo: String
+  webLogo: String
+}
+
+input INPUT_THEME_FORM_TEXT {
+  description: String
+  navTitle: String
+  webTitle: String
+}
+
+input INPUT_UPDATE_APP {
+  attribute: JSON
+  name: String!
+  status: ENUM_APP_STATUS
+}
+
+input INPUT_UPDATE_PROFILE {
+  attribute: JSON
+  roleList: [String]
+  setting: JSON
+}
+
+input INPUT_USERNAME_REGISTER {
+  attribute: JSON
+  confirmPassword: String!
+  password: String!
+  roleKey: String
+  username: String!
+}
+
+input INPUT_USER_ROLE_STATUS {
+  note: String
+  roleKey: String!
+  status: ENUM_USER_ROLE_STATUS
+  userId: ID
+}
+
+input INPUT_VERIFY_EMAIL {
+  email: String!
+  verifyToken: String!
+}
+
+input INPUT_VERIFY_PASSWORD_EMAIL {
+  confirmPassword: String!
+  email: String!
+  newPassword: String!
+  verifyToken: String!
+}
+
+input INPUT_VERIFY_PASSWORD_OTP {
+  confirmPassword: String!
+  countryCode: String!
+  newPassword: String!
+  otp: Number!
+  phoneNumber: Number!
+  ref: String!
+}
+
+input INPUT_VERIFY_PASSWORD_SYSTEM_ADMIN_EMAIL {
+  attribute: JSON
+  confirmPassword: String!
+  email: String!
+  password: String!
+  verifyToken: String!
+}
+
+scalar JSON
+
+scalar JSONObject
+
+type Mutation {
+  addEmailGlobal(input: INPUT_ADD_EMAIL): TYPE_OK
+  addGateway(input: INPUT_GATEWAY!): TYPE_GATEWAY_LIST
+  addOrgAdmin(email: String!, orgKey: String!, roleList: [String]): TYPE_PROFILE
+  addServiceToApp(serviceKey: String!): TYPE_APP_SERVICE
+  cancelNotificationMessage(
+    notificationMessageIds: [ID!]!
+  ): TYPE_NOTIFICATION_MESSAGE
+  changeOrgApprovalAttributeStatus(
+    input: INPUT_ORG_APPROVAL_ATTRIBUTE_STATUS
+  ): TYPE_ORGANIZATION_APPROVAL_RESPONSE
+  changeOrgStatus(input: INPUT_ORG_STATUS!): TYPE_ORGANIZATION
+  changePassword(
+    confirmPassword: String!
+    newPassword: String!
+    password: String!
+  ): TYPE_PROFILE
+  changeResourceAdminRoleApprovalAttributeStatus(
+    input: INPUT_ROLE_APPROVAL_ATTRIBUTE_STATUS
+  ): TYPE_ROLE_APROVAL_ATTRIBUTE
+  changeResourceAdminRoleStatus(
+    input: INPUT_USER_ROLE_STATUS
+  ): TYPE_ROLE_APROVAL_ATTRIBUTE
+  changeResourceOwnerRoleApprovalAttributeStatus(
+    input: INPUT_ROLE_APPROVAL_ATTRIBUTE_STATUS
+  ): TYPE_ROLE_APROVAL_ATTRIBUTE
+  changeResourceOwnerRoleStatus(
+    input: INPUT_USER_ROLE_STATUS
+  ): TYPE_ROLE_APROVAL_ATTRIBUTE
+  checkVerifyEmailOrg(email: String!): TYPE_CHECK_VERIFY_EMAIL
+  confirmOrgAdmin(email: String!, verifyToken: String): TYPE_PROFILE
+  createCategory(input: INPUT_CATEGORY): TYPE_CATEGORY
+  createCredential(credentialInput: INPUT_CREDENTIAL_FORM): TYPE_CREDENTIAL
+  createCustomMenu(input: INPUT_SCHEMA_CUSTOM_MENU): TYPE_CUSTOM_MENU
+  createLocaleText(input: INPUT_LOCALE_TEXT_FORM): TYPE_LOCALE_TEXT
+  createLocaleTextList(
+    inputList: [INPUT_LOCALE_TEXT_FORM!]!
+  ): TYPE_LOCALE_TEXT_LIST
+  createNotification(
+    from: String!
+    input: INPUT_NOTIFICATION!
+    to: [String!]!
+  ): TYPE_NOTIFICATION_LIST
+  createNotificationMessage(
+    channel: INPUT_NOTIFICATION_MESSAGE_CHANNEL
+    input: INPUT_NOTIFICATION_MESSAGE
+    sendAt: Date!
+    serviceKey: String!
+    to: [String!]!
+  ): TYPE_NOTIFICATION_MESSAGE_COUNT_PAYLOAD
+  createNotificationMessageForService(
+    appKey: String!
+    channel: INPUT_NOTIFICATION_MESSAGE_CHANNEL
+    input: INPUT_NOTIFICATION_MESSAGE
+    sendAt: Date!
+    serviceKey: String!
+    to: [String!]!
+  ): TYPE_NOTIFICATION_MESSAGE_COUNT_PAYLOAD
+  createNotificationTemplate(
+    input: INPUT_SCMEMA_NOTIFICATION_TEMPLATE
+  ): TYPE_NOTIFICATION_TEMPLATE
+  createOrganization(input: INPUT_ORGANIZATION_FORM): TYPE_ORGANIZATION
+  createRole(roleInput: INPUT_ROLE_FROM): TYPE_APP_ROLE
+  createRunningNumber(input: INPUT_RUNNING_NUMBER): TYPE_RUNNING_NUMBER
+  deleteCategory(categoryId: String!): TYPE_CATEGORY
+  deleteCredential(credentialKey: String!): TYPE_CREDENTIAL
+  deleteCustomMenu(customMenuIdList: [ID]!): TYPE_CUSTOM_MENU_LIST
+  deleteDataSecurity(
+    roleKey: String!
+    securityKeyList: [String!]
+  ): TYPE_ROLE_DATA_SECURITY_LIST
+  deleteEmailContact(email: String!, orgKey: String!): TYPE_ORGANIZATION
+  deleteGateway(gatewayId: ID!): TYPE_GATEWAY_LIST
+  deleteInvite(inviteId: ID!, orgKey: String!): TYPE_INVITE
+  deleteLocaleText(dataKey: String!, orgKey: String): TYPE_LOCALE_TEXT
+  deleteMasterData(changeTo: String, dataKey: String!): TYPE_MASTER_DATA
+  deleteMyUser: TYPE_PROFILE
+  deleteNotificationTemplate(templateKey: String!): TYPE_NOTIFICATION_TEMPLATE
+  deleteOrgAdmin(orgKey: String!, userId: ID!): TYPE_PROFILE
+  deleteOrganization(orgKey: String!): TYPE_ORGANIZATION
+  deletePermission(
+    permissionKeyList: [String!]!
+    roleKey: String!
+  ): TYPE_ROLE_PERMISSION_LIST
+  deleteResourceAdmin(userId: ID!): TYPE_PROFILE
+  deleteResourceAdminPermission(
+    appKey: String!
+    permissionKeyList: [String!]
+    roleKey: String!
+  ): TYPE_ROLE_PERMISSION_LIST
+  deleteResourceOwnerPermission(
+    appKey: String!
+    permissionKeyList: [String!]
+    roleKey: String!
+  ): TYPE_ROLE_PERMISSION_LIST
+  deleteRole(roleKeyToDelete: String!, roleKeyToMove: String!): TYPE_APP_ROLE
+  deleteRunningNumber(runningId: [String!]): TYPE_RUNNING_NUMBER
+  deleteTheme(themeKey: String!): TYPE_THEME_RESPONSE
+  deleteUserOrganization(inviteId: ID!, orgKey: String!): TYPE_INVITE
+  deleteUserOrganizationByUserId(orgKey: String!, userId: ID!): TYPE_INVITE
+  deleteVersionControl(versionKey: String): TYPE_VERSION_CONTROL
+  disableServiceFeature(featureKeyList: [String!]): TYPE_FEATURE_LIST
+  enableServiceFeature(featureKeyList: [String!]): TYPE_FEATURE_LIST
+  generateAuthCode: TYPE_LOGIN
+  generateRunningNumber(
+    input: INPUT_GENERATE_RUNNING_NUMBER
+  ): TYPE_GENERATE_RUNNING_NUMBER
+  getOrgAccessToken(
+    accessToken: String!
+    orgKey: String!
+  ): TYPE_ORG_ACCEES_TOKEN
+  getS3GetObjectSignedUrl(fileKeys: [String]): TYPE_S3_SIGNED_URL
+  getS3PutObjectSignedUrl(
+    inputs: [INPUT_S3_PUT_OBJECT_SIGNED_URL]
+    userId: ID
+  ): TYPE_S3_SIGNED_URL
+  getTokenAuthCode(code: String!): TYPE_LOGIN
+  inviteOrganizationCode(inviteCode: String!): TYPE_ORGANIZATION
+  inviteUserOrganization(
+    emailList: [String!]!
+    orgKey: String!
+    roleKey: String
+  ): TYPE_INVITE
+  loginApple(appleToken: String!, userId: String!): TYPE_LOGIN
+  loginEmail(
+    authType: ENUM_AUTH_TYPE!
+    email: String!
+    password: String!
+    redirectUrl: String
+  ): TYPE_LOGIN
+  loginFacebook(
+    authType: ENUM_AUTH_TYPE!
+    facebookToken: String!
+    redirectUrl: String
+  ): TYPE_LOGIN
+  loginGoogle(
+    authType: ENUM_AUTH_TYPE!
+    googleToken: String!
+    redirectUrl: String
+  ): TYPE_LOGIN
+  loginLine(
+    authType: ENUM_AUTH_TYPE!
+    lineToken: String!
+    redirectUrl: String
+  ): TYPE_LOGIN
+  loginUsername(password: String!, username: String!): TYPE_LOGIN
+  loginWithAuthCode(input: INPUT_LOGIN_AUTH_CODE!): TYPE_AUTH_CODE
+  readAllNotification: TYPE_NOTIFICATION_LIST
+  readNotification(notificationIdList: [String!]!): TYPE_NOTIFICATION_LIST
+  refreshAccessToken(refreshToken: String!): TYPE_REFRESH_ACCESS_TOKEN
+  refreshOrgAccessToken(refreshOrgToken: String!): TYPE_ORG_ACCEES_TOKEN
+  registerEmail(input: INPUT_EMAIL_REGISTER_INPUT): TYPE_EMAIL_REGISTER
+  registerOrgAdmin(input: INPUT_ORG_ADMIN_REGISTER_INPUT): TYPE_EMAIL_REGISTER
+  registerUsername(input: INPUT_USERNAME_REGISTER): TYPE_USERNAME_REGISTER
+  resendRegisterEmail(email: String!): TYPE_EMAIL_REGISTER
+  resetPasswordEmail(email: String!): TYPE_RESET_PASSWORD_EMAIL
+  resetPasswordOtp(input: INPUT_REQUEST_OTP): TYPE_RESET_PASSWORD_EMAIL
+  s3UploadFile(file: FileUpload, userId: ID): TYPE_S3_SIGNED_URL
+  sendContactMail(input: INPUT_SEND_MAIL_FORM): TYPE_OK
+  sendToVerifyEmailOrg(email: String!): TYPE_OK
+  singleUpload(file: FileUpload!): File!
+  syncOrganization(orgKeyList: [String]): TYPE_SYNC_ORGANIZATION
+  updateAppAttribute(attributeInput: JSON!): TYPE_APP
+  updateCategory(categoryId: String!, input: INPUT_CATEGORY): TYPE_CATEGORY
+  updateConfig(input: INPUT_CONFIG_FORM): TYPE_CONFIG
+  updateCredential(
+    credentialInput: INPUT_CREDENTIAL_FORM_UPDATE
+    credentialKey: String!
+  ): TYPE_CREDENTIAL
+  updateCredentialKey(
+    credentialKey: String!
+    newCredentialKey: String!
+  ): TYPE_CREDENTIAL
+  updateCustomMenu(
+    customMenuId: ID!
+    input: INPUT_SCHEMA_CUSTOM_MENU
+  ): TYPE_CUSTOM_MENU
+  updateDataSecurity(
+    roleKey: String!
+    securityList: [INPUT_DATA_SECURITY_FORM]
+  ): TYPE_ROLE_DATA_SECURITY_LIST
+  updateGateway(gatewayId: ID!, input: INPUT_GATEWAY!): TYPE_GATEWAY_LIST
+  updateLocaleText(
+    dataInput: INPUT_LOCALE_TEXT_FORM
+    dataKey: String!
+    orgKey: String
+  ): TYPE_LOCALE_TEXT
+  updateMyProfile(input: INPUT_UPDATE_PROFILE): TYPE_PROFILE
+  updateMyRoleApprovalAttribute(
+    roleKey: String!
+    secureAttibute: JSON
+  ): TYPE_ROLE_APROVAL_ATTRIBUTE
+  updateNotificationTemplate(
+    templateInput: INPUT_SCMEMA_NOTIFICATION_TEMPLATE
+    templateKey: String!
+  ): TYPE_NOTIFICATION_TEMPLATE
+  updateOAuth(input: INPUT_O_AUTH_FORM): TYPE_O_AUTH
+  updateOrgAdminRole(
+    orgKey: String!
+    roleList: [String]
+    userId: ID!
+  ): TYPE_PROFILE
+  updateOrgApprovalAttribute(
+    input: INPUT_ORGANIZATION_APPROVAL_FORM
+  ): TYPE_ORGANIZATION_APPROVAL_RESPONSE
+  updateOrgKey(newOrgKey: String!, orgKey: String!): TYPE_ORGANIZATION
+  updateOrgStatus(
+    note: String
+    orgKey: String!
+    status: ENUM_ORGANIZATION_STATUS
+  ): TYPE_ORGANIZATION
+  updateOrganization(
+    input: INPUT_ORGANIZATION_UPDATE
+    orgKey: String!
+    parentOrgKey: String
+  ): TYPE_ORGANIZATION
+  updatePermission(
+    permissionList: [INPUT_PERMISSION_FORM]
+    roleKey: String!
+  ): TYPE_ROLE_PERMISSION_LIST
+  updateResourceAdmin(
+    adminInput: INPUT_UPDATE_PROFILE
+    userId: ID!
+  ): TYPE_PROFILE
+  updateResourceAdminPermission(
+    appKey: String!
+    permissionList: [INPUT_PERMISSION_FORM]
+    roleKey: String!
+  ): TYPE_ROLE_PERMISSION_LIST
+  updateResourceOwnerPermission(
+    appKey: String!
+    permissionList: [INPUT_PERMISSION_FORM]
+    roleKey: String!
+  ): TYPE_ROLE_PERMISSION_LIST
+  updateResourceOwnerProfile(
+    input: INPUT_UPDATE_PROFILE
+    resourceOwnerId: ID!
+  ): TYPE_PROFILE
+  updateRole(roleInput: INPUT_ROLE_FROM, roleKey: String!): TYPE_APP_ROLE
+  updateSecretKey(
+    credentialKey: String!
+    newSecretKey: String!
+  ): TYPE_CREDENTIAL
+  updateTheme(input: INPUT_THEME_FORM): TYPE_THEME_RESPONSE
+  updateVersionControl(
+    attribute: JSON
+    versionKey: String
+  ): TYPE_VERSION_CONTROL
+  verifyEmail(input: INPUT_VERIFY_EMAIL): TYPE_EMAIL_REGISTER
+  verifyEmailGlobal(input: INPUT_VERIFY_EMAIL): TYPE_OK
+  verifyEmailOrganization(
+    email: String!
+    verifyToken: String
+  ): TYPE_ORGANIZATION
+  verifyInviteOrganization(code: String!): TYPE_INVITE
+  verifyPasswordEmail(
+    input: INPUT_VERIFY_PASSWORD_EMAIL
+  ): TYPE_RESET_PASSWORD_EMAIL
+}
+
+scalar Number
+
+type ORGANIZATION_LIST {
+  code: String
+  message: String
+  pagination: TYPE_PAGINATION
+  payload: [TYPE_ORGANIZATION_RESPONSE]
+}
+
+type Query {
+  _dummy: String
+  exportUser: TYPE_TYPE_ROLE_PERMISSION_USER_LIST
+  generateKey(
+    capitalization: ENUM_GENERATE_KEY_CAPITALIZATION
+    charset: String
+    length: Int
+    readable: Boolean
+  ): TYPE_GENERATE_KEY_RESPONSE
+  generateOrgTokenRef(orgKey: String!): TYPE_ORG_TOKEN_REF
+  getAllOrganization(input: INPUT_FIND_DATA): ORGANIZATION_LIST
+  getAppByCredential(credentialKey: String!): GET_APP_CREDENTIAL_HOST
+  getAppByEmail(email: String!): GET_APP_BY_EMAIL
+  getAppService: TYPE_APP_SERVICE_LIST
+  getAppTheme(find: INPUT_FIND_DATA): TYPE_THEME_RESPONSE_LIST
+  getCategory(find: INPUT_FIND_DATA): TYPE_CATEGORY_LIST
+  getConfig(input: INPUT_FIND_DATA): TYPE_CONFIG_LIST
+  getCredential: TYPE_CREDENTIAL_LIST
+  getCredentialByHost(host: String!): GET_APP_CREDENTIAL_HOST
+  getCustomMenu(input: INPUT_FIND_DATA): TYPE_CUSTOM_MENU_LIST
+  getDataRunningNumber(input: INPUT_FIND_DATA): TYPE_RUNNING_NUMBER_LIST
+  getDataSecurityRole(roleKey: String!): TYPE_DATA_SECURITY_LIST
+  getGateway(input: INPUT_FIND_DATA): TYPE_GATEWAY
+  getInviteOrgRole: TYPE_APP_ROLE_LIST
+  getInviteRole(orgKey: String!): TYPE_APP_ROLE_LIST
+  getInviteUserOrganization(
+    input: INPUT_FIND_DATA
+    orgKey: String!
+  ): TYPE_INVITE_LIST
+  getLocaleText(input: INPUT_FIND_DATA): TYPE_LOCALE_TEXT_LIST
+  getLog(find: INPUT_FIND_DATA): TYPE_LOG_LIST
+  getMasterData(input: INPUT_FIND_DATA): TYPE_MASTER_DATA_LIST
+  getMemberOrganization(
+    input: INPUT_FIND_DATA
+    orgKey: String!
+  ): TYPE_PROFILE_LIST
+  getMyAppRole: TYPE_MY_ORG_ROLE
+  getMyNotification(find: INPUT_FIND_DATA): TYPE_NOTIFICATION_LIST
+  getMyOrgRole(orgKey: String!): TYPE_MY_ORG_ROLE
+  getMyPermission: TYPE_TYPE_ROLE_PERMISSION_USER_LIST
+  getMyProfile: TYPE_PROFILE
+  getMyRoleApprovalAttribute: TYPE_ROLE_APROVAL_ATTRIBUTE
+  getNotificationMessage(find: INPUT_FIND_DATA): TYPE_NOTIFICATION_MESSAGE_LIST
+  getNotificationTemplate(
+    find: INPUT_FIND_DATA
+  ): TYPE_NOTIFICATION_TEMPLATE_LIST
+  getOAuth: TYPE_O_AUTH
+  getOrgAccessTokenWithRef(tokenRef: String!): TYPE_ORG_ACCEES_TOKEN
+  getOrgAdmin(find: INPUT_FIND_DATA): TYPE_PROFILE_LIST
+  getOrgApprovalAttribute(
+    input: INPUT_FIND_DATA
+  ): TYPE_ORGANIZATION_APPROVAL_LIST
+  getOrgChildren(orgKey: String): TYPE_ORG_CHILDREN
+  getOrganization(input: INPUT_FIND_DATA): ORGANIZATION_LIST
+  getOrganizationApproval(input: INPUT_FIND_DATA): ORGANIZATION_LIST
+  getOrganizationByCoordinates(
+    coordinates: [Number]!
+    distance: Number!
+    limit: Number
+  ): ORGANIZATION_LIST
+  getOrganizationByName(input: INPUT_FIND_DATA, name: String): ORGANIZATION_LIST
+  getPermissionRole(roleKey: String!): TYPE_PERMISSION_LIST
+  getProfile(userIdList: [ID!]!): TYPE_PROFILE_LIST
+  getPublicAppConfig(configKeyList: [String]): TYPE_CONFIG_LIST
+  getPublicProfile(find: INPUT_FIND_DATA, userIdList: [ID]!): TYPE_PROFILE_LIST
+  getResourceAdmin(find: INPUT_FIND_DATA): TYPE_PROFILE_LIST
+  getResourceAdminPermission(
+    roleKeyList: [String!]
+  ): TYPE_TYPE_ROLE_PERMISSION_USER_LIST
+  getResourceAdminRoleApprovalAttribute(
+    input: INPUT_FIND_DATA
+  ): TYPE_ROLE_APROVAL_ATTRIBUTE_LIST
+  getResourceOwnerPermission(
+    roleKeyList: [String!]
+  ): TYPE_TYPE_ROLE_PERMISSION_USER_LIST
+  getResourceOwnerProfile(find: INPUT_FIND_DATA): TYPE_PROFILE_LIST
+  getResourceOwnerRoleApprovalAttribute(
+    input: INPUT_FIND_DATA
+  ): TYPE_ROLE_APROVAL_ATTRIBUTE_LIST
+  getRole: TYPE_APP_ROLE_LIST
+  getRoleRegisable(roleKey: String): TYPE_APP_ROLE_LIST
+  getS3GetObjectSignedUrl(fileKeys: [String]): TYPE_S3_SIGNED_URL
+  getS3PutObjectSignedUrl(
+    inputs: [INPUT_S3_PUT_OBJECT_SIGNED_URL]
+    userId: ID
+  ): TYPE_S3_SIGNED_URL
+  getSecretAppConfig(configKeyList: [String]): TYPE_CONFIG_LIST
+  getService(input: INPUT_FIND_DATA): TYPE_SERVICE_LIST
+  getServiceFeature: TYPE_FEATURE_LIST
+  getServiceInfo(serviceKey: String!): TYPE_SERVICE_INFO
+  getTokenAuthCode(code: String!): TYPE_LOGIN
+  getVersionControl(find: INPUT_FIND_DATA): TYPE_VERSION_CONTROL_LIST
+  otherFields: Boolean!
+  webhookRunTaskAppNotification(secretKey: String!): TYPE_WEBHOOK
+  webhookRunTaskEmail(secretKey: String!): TYPE_WEBHOOK
+}
+
+type Subscription {
+  _dummy: String
+  getMyNotification(find: INPUT_FIND_DATA): TYPE_NOTIFICATION_LIST
+}
+
+type TYPE_APP {
+  code: String
+  message: String
+  payload: TYPE_APP_SCHEMA
+}
+
+type TYPE_APP_ACCEES_TOKEN {
+  code: String
+  message: String
+  payload: TYPE_APP_ACCEES_TOKEN_PAYLOAD
+}
+
+type TYPE_APP_ACCEES_TOKEN_PAYLOAD {
+  app: TYPE_ORGANIZATION_RESPONSE
+  profile: TYPE_USER_PROFILE
+  token: TYPE_APP_ACCEES_TOKEN_PAYLOAD_TOKEN
+}
+
+type TYPE_APP_ACCEES_TOKEN_PAYLOAD_TOKEN {
+  appAccessToken: String
+  appRefreshToken: String
+}
+
+type TYPE_APP_CREDENTIAL {
+  code: String
+  message: String
+  payload: [TYPE_APP_CREDENTIAL_PAYLOAD]
+}
+
+type TYPE_APP_CREDENTIAL_PAYLOAD {
+  app: TYPE_APP_SCHEMA
+  credential: TYPE_CREDENTIAL_SCHEMA
+}
+
+type TYPE_APP_FEATURE_KEY {
+  _id: ID
+  description: String
+  enable: Boolean
+  key: String
+  serviceId: ID
+}
+
+type TYPE_APP_LIST {
+  pagination: TYPE_PAGINATION
+  payload: [TYPE_APP_SCHEMA]
+}
+
+type TYPE_APP_ROLE {
+  code: String
+  message: String
+  payload: TYPE_APP_ROLE_PAYLOAD
+}
+
+type TYPE_APP_ROLE_LIST {
+  code: String
+  message: String
+  payload: TYPE_APP_ROLE_LIST_PAYLOAD
+}
+
+type TYPE_APP_ROLE_LIST_PAYLOAD {
+  app: TYPE_APP_SCHEMA
+  roleList: [TYPE_ROLE]
+}
+
+type TYPE_APP_ROLE_PAYLOAD {
+  app: TYPE_APP_SCHEMA
+  roleList: [TYPE_ROLE]
+  serviceList: [TYPE_SERVICE_LIST_PAYLOAD]
+}
+
+type TYPE_APP_SCHEMA {
+  appKey: String
+  attribute: JSON
+  configurationList: [TYPE_CONFIG_GLOBAL]
+  contactEmailList: [String]
+  featureList: [TYPE_FEATURE_SCHEMA]
+  name: String
+  orgFieldList: [JSON]
+  roleList: [JSON]
+  status: ENUM_APP_STATUS
+}
+
+type TYPE_APP_SERVICE {
+  code: String
+  message: String
+  payload: TYPE_APP_SERVICE_PAYLOAD
+}
+
+type TYPE_APP_SERVICE_LIST {
+  code: String
+  message: String
+  payload: TYPE_APP_SERVICE_LIST_PAYLOAD
+}
+
+type TYPE_APP_SERVICE_LIST_PAYLOAD {
+  app: TYPE_APP_SCHEMA
+  serviceList: [TYPE_SERVICE]
+}
+
+type TYPE_APP_SERVICE_PAYLOAD {
+  app: TYPE_APP_SCHEMA
+  service: TYPE_SERVICE
+  syncStatus: String
+}
+
+type TYPE_ATTRIBUTE {
+  _id: ID
+  key: String
+  value: String
+}
+
+type TYPE_AUTH_CODE {
+  code: String
+  message: String
+  payload: TYPE_AUTH_CODE_PAYLOAD
+}
+
+type TYPE_AUTH_CODE_PAYLOAD {
+  authType: String
+  code: String
+  email: String
+  redirectUrl: String
+}
+
+type TYPE_AWS {
+  _id: ID
+  accessKey: String
+  bucketName: String
+  cloudWatchEnable: Boolean
+  endpoint: String
+  secretKey: String
+}
+
+type TYPE_CATEGORY {
+  code: String
+  message: String
+  payload: TYPE_CATEGORY_SCHEMA
+}
+
+type TYPE_CATEGORY_LIST {
+  code: String
+  message: String
+  pagination: TYPE_PAGINATION
+  payload: [TYPE_CATEGORY_SCHEMA]
+}
+
+type TYPE_CATEGORY_SCHEMA {
+  _id: ID
+  createdAt: Date
+  createdBy: TYPE_USER_PROFILE
+  name: String
+  status: ENUM_CATEGORY_STATUS
+  updatedAt: Date
+  updatedBy: TYPE_USER_PROFILE
+}
+
+type TYPE_CHECK_VERIFY_EMAIL {
+  code: String
+  message: String
+  verifyStatus: String
+}
+
+type TYPE_CONFIG {
+  configKey: String
+  configName: String
+  isGlobal: Boolean
+  privacy: ENUM_CONFIG_PRIVACY
+  relatedConfig: [String]
+  value: JSON
+}
+
+type TYPE_CONFIG_GLOBAL {
+  configKey: String
+  configName: String
+  isGlobal: Boolean
+  relatedConfig: [String]
+  value: TYPE_VALUE_CONFIG_GLOBAL
+}
+
+type TYPE_CONFIG_LIST {
+  code: String
+  message: String
+  pagination: TYPE_PAGINATION
+  payload: [TYPE_CONFIG]
+}
+
+type TYPE_CREDENTIAL {
+  code: String
+  message: String
+  payload: TYPE_CREDENTIAL_PAYLOAD
+}
+
+type TYPE_CREDENTIAL_LIST {
+  code: String
+  message: String
+  payload: TYPE_CREDENTIAL_LIST_PAYLOAD
+}
+
+type TYPE_CREDENTIAL_LIST_PAYLOAD {
+  app: TYPE_APP_SCHEMA
+  credentialList: [TYPE_CREDENTIAL_SCHEMA]
+}
+
+type TYPE_CREDENTIAL_PAYLOAD {
+  credential: TYPE_CREDENTIAL_SCHEMA
+  serviceList: [TYPE_SERVICE_LIST_PAYLOAD]
+}
+
+type TYPE_CREDENTIAL_SCHEMA {
+  credentialKey: String
+  expiration: TYPE_EXPIRATION
+  hostList: [String]
+  isAdminCredential: ENUM_IS
+  name: String
+  secretKey: String
+  status: ENUM_APP_STATUS
+  type: ENUM_CREDENTIAL_TYPE
+}
+
+type TYPE_CUSTOM_MENU {
+  code: String
+  message: String
+  payload: TYPE_SCHEMA_CUSTOM_MENU
+}
+
+type TYPE_CUSTOM_MENU_LIST {
+  code: String
+  message: String
+  pagination: TYPE_PAGINATION
+  payload: [TYPE_SCHEMA_CUSTOM_MENU]
+}
+
+type TYPE_DATA_SECURITY_LIST {
+  code: String
+  message: String
+  payload: [TYPE_ROLE_DATA_SECURITY]
+}
+
+type TYPE_EMAIL {
+  value: String
+  verifyStatus: ENUM_VERIFY_STATUS
+}
+
+type TYPE_EMAIL_REGISTER {
+  code: String
+  message: String
+  payload: TYPE_USER_PROFILE
+}
+
+type TYPE_ENDPOIN_SERVICE {
+  resourceAdmin: String
+  resourceOwner: String
+  system: String
+}
+
+type TYPE_ENDPOIN_SERVICE_TYPE {
+  gql: TYPE_ENDPOIN_SERVICE
+  rest: TYPE_ENDPOIN_SERVICE
+}
+
+type TYPE_EXPIRATION {
+  access: String
+  refresh: String
+}
+
+type TYPE_FEATURE_KEY {
+  _id: ID
+  description: String
+  enable: Boolean
+  key: String
+}
+
+type TYPE_FEATURE_LIST {
+  code: String
+  message: String
+  payload: TYPE_FEATURE_LIST_PAYLOAD
+}
+
+type TYPE_FEATURE_LIST_PAYLOAD {
+  app: TYPE_APP_SCHEMA
+  featureList: [TYPE_FEATURE_SCHEMA]
+}
+
+type TYPE_FEATURE_SCHEMA {
+  config: JSON
+  enable: Boolean
+  featureKey: String
+  name: String
+  requiredFeatureKeyList: [String]
+}
+
+type TYPE_GATEWAY {
+  code: String
+  message: String
+  pagination: TYPE_PAGINATION
+  payload: [TYPE_SCHEMA_GATEWAY]
+}
+
+type TYPE_GATEWAY_LIST {
+  code: String
+  message: String
+  payload: TYPE_SCHEMA_GATEWAY
+}
+
+type TYPE_GENERATE_KEY {
+  key: String
+}
+
+type TYPE_GENERATE_KEY_RESPONSE {
+  code: String
+  message: String
+  payload: TYPE_GENERATE_KEY
+}
+
+type TYPE_GENERATE_RUNNING_NUMBER {
+  code: String
+  message: String
+  payload: TYPE_RUNNING_NUMBER_NO
+}
+
+type TYPE_HELLO {
+  message: String
+}
+
+type TYPE_INVITE {
+  code: String
+  message: String
+  payload: TYPE_SCHEMA_INVITE
+}
+
+type TYPE_INVITE_LIST {
+  code: String
+  message: String
+  pagination: TYPE_PAGINATION
+  payload: [TYPE_SCHEMA_INVITE]
+}
+
+type TYPE_KEY {
+  _id: ID
+  code: String
+  description: String
+  value: String
+}
+
+type TYPE_LINE {
+  login: TYPE_LINE_LOGIN
+  notify: TYPE_NOTIFY
+}
+
+type TYPE_LINE_LOGIN {
+  _id: ID
+  clientId: String
+  clientSecret: String
+  redirectUri: String
+}
+
+type TYPE_LOCALE_TEXT {
+  code: String
+  message: String
+  payload: TYPE_LOCALE_TEXT_RESPONSE
+}
+
+type TYPE_LOCALE_TEXT_LIST {
+  code: String
+  message: String
+  pagination: TYPE_PAGINATION
+  payload: [TYPE_LOCALE_TEXT_RESPONSE]
+}
+
+type TYPE_LOCALE_TEXT_RESPONSE {
+  attribute: JSON
+  dataKey: String
+  locale: String
+  orgKey: String
+  text: String
+}
+
+type TYPE_LOGIN {
+  code: String
+  message: String
+  payload: TYPE_LOGIN_PAYLOAD
+}
+
+type TYPE_LOGIN_PAYLOAD {
+  authType: ENUM_AUTH_TYPE
+  code: String
+  credentialKey: String
+  isFirstLogin: Boolean
+  profile: TYPE_USER_PROFILE
+  redirectUrl: String
+  token: TYPE_TOKEN
+}
+
+type TYPE_LOG_LIST {
+  code: String
+  message: String
+  pagination: TYPE_PAGINATION
+  payload: [TYPE_LOG_SCHEMA]
+}
+
+type TYPE_LOG_SCHEMA {
+  action: String
+  actor: JSON
+  eventKey: String
+  eventName: String
+  ipAddress: String
+  isSystemLog: Boolean
+  message: String
+  nextData: JSON
+  prevData: JSON
+  service: JSON
+  userAgent: String
+}
+
+type TYPE_MASTER_DATA {
+  code: String
+  message: String
+  payload: TYPE_MASTER_DATA_RESPONSE
+}
+
+type TYPE_MASTER_DATA_LIST {
+  code: String
+  message: String
+  pagination: TYPE_PAGINATION
+  payload: [TYPE_MASTER_DATA_RESPONSE]
+}
+
+type TYPE_MASTER_DATA_RESPONSE {
+  attribute: JSON
+  dataKey: String
+  locale: String
+  parentKey: String
+  searchable: ENUM_IS
+  text: String
+}
+
+type TYPE_MESSAGE {
+  message: String
+  success: Boolean
+}
+
+type TYPE_MY_ORG_ROLE {
+  code: String
+  message: String
+  payload: [TYPE_ROLE]
+}
+
+type TYPE_NAME {
+  name: String
+  name_en: String
+}
+
+type TYPE_NOTIFICATION {
+  code: String
+  message: String
+  payload: TYPE_NOTIFICATION_SCHEMA
+}
+
+type TYPE_NOTIFICATION_DATA_KEY {
+  dataKey: String
+  defaultValue: String
+  isRequired: ENUM_NOTIFICATION_IS_REQUIRED
+}
+
+type TYPE_NOTIFICATION_LIST {
+  code: String
+  message: String
+  pagination: TYPE_PAGINATION
+  payload: [TYPE_NOTIFICATION_SCHEMA]
+  unread: Number
+}
+
+type TYPE_NOTIFICATION_MESSAGE {
+  code: String
+  message: String
+  payload: TYPE_NOTIFICATION_MESSAGE_SCHEMA
+}
+
+type TYPE_NOTIFICATION_MESSAGE_COUNT {
+  totalSuccess: Number
+}
+
+type TYPE_NOTIFICATION_MESSAGE_COUNT_PAYLOAD {
+  code: String
+  message: String
+  payload: TYPE_NOTIFICATION_MESSAGE_COUNT
+}
+
+type TYPE_NOTIFICATION_MESSAGE_LIST {
+  code: String
+  message: String
+  pagination: TYPE_PAGINATION
+  payload: [TYPE_NOTIFICATION_MESSAGE_SCHEMA]
+}
+
+type TYPE_NOTIFICATION_MESSAGE_SCHEMA {
+  _id: ID
+  channel: TYPE_NOTIFICATION_MESSAGE_SCHEMA_CHANNEL
+  content: String
+  createdAt: Date
+  displayTo: String
+  from: String
+  orgKey: String
+  sendAt: Date
+  sendType: ENUM_NOTIFICATION_MESSAGE_SENDTYPE
+  status: ENUM_NOTIFICATION_MESSAGE_STATUS
+  title: String
+  to: String
+  updatedAt: Date
+}
+
+type TYPE_NOTIFICATION_MESSAGE_SCHEMA_CHANNEL {
+  condition: ENUM_NOTIFICATION_MESSAGE_CHANNEL_CONDITION
+  key: ENUM_NOTIFICATION_MESSAGE_CHANNEL_KEY
+}
+
+type TYPE_NOTIFICATION_SCHEMA {
+  _id: ID
+  attribute: JSON
+  content: String
+  createdAt: Date
+  from: String
+  icon: String
+  read: ENUM_NOTIFICATION_READ
+  sendAt: Date
+  title: String
+  to: String
+  type: ENUM_NOTIFICATION_USER_TYPE
+  updatedAt: Date
+}
+
+type TYPE_NOTIFICATION_TEMPLATE {
+  code: String
+  message: String
+  payload: TYPE_SCMEMA_NOTIFICATION_TEMPLATE
+}
+
+type TYPE_NOTIFICATION_TEMPLATE_LIST {
+  code: String
+  message: String
+  pagination: TYPE_PAGINATION
+  payload: [TYPE_SCMEMA_NOTIFICATION_TEMPLATE]
+}
+
+type TYPE_NOTIFY {
+  _id: ID
+  isSendNotify: Boolean
+  notificationDisabled: Boolean
+  notifyToken: String
+}
+
+type TYPE_NUMBER_ATTRIBUTE {
+  _id: ID
+  key: String
+  value: Number
+}
+
+type TYPE_OK {
+  code: String
+  message: String
+}
+
+type TYPE_ORGANIZATION {
+  code: String
+  message: String
+  payload: TYPE_ORGANIZATION_RESPONSE
+}
+
+type TYPE_ORGANIZATION_APPROVAL {
+  approvalAttribute: JSON
+  note: String
+  organization: TYPE_ORGANIZATION_RESPONSE
+  status: ENUM_ORGANIZATION_APPROVAL_STATUS
+}
+
+type TYPE_ORGANIZATION_APPROVAL_LIST {
+  code: String
+  message: String
+  pagination: TYPE_PAGINATION
+  payload: [TYPE_ORGANIZATION_APPROVAL]
+}
+
+type TYPE_ORGANIZATION_APPROVAL_RESPONSE {
+  code: String
+  message: String
+  payload: TYPE_ORGANIZATION_APPROVAL
+}
+
+type TYPE_ORGANIZATION_CONTACT_EMAIL {
+  value: String
+  verifyStatus: String
+}
+
+type TYPE_ORGANIZATION_LOCALE_LIST {
+  dataKey: String
+  locale: JSON
+  masterKey: String
+}
+
+type TYPE_ORGANIZATION_LOCATION {
+  coordinates: [Number]
+  type: String
+}
+
+type TYPE_ORGANIZATION_MASTER_DETAIL_LIST {
+  dataKey: String
+  masterData: JSON
+  masterKey: String
+}
+
+type TYPE_ORGANIZATION_RESPONSE {
+  address: JSON
+  attribute: JSON
+  categoryList: [TYPE_CATEGORY_SCHEMA]
+  contactEmailList: [String]
+  contactName: String
+  createdAt: Date
+  location: TYPE_ORGANIZATION_LOCATION
+  name: String
+  orgKey: String
+  path: String
+  status: ENUM_ORGANIZATION_STATUS
+  updatedAt: Date
+}
+
+type TYPE_ORGANIZATION_TAG_LIST {
+  masterKey: String
+  tagKey: String
+}
+
+type TYPE_ORG_ACCEES_TOKEN {
+  code: String
+  message: String
+  payload: TYPE_ORG_ACCEES_TOKEN_PAYLOAD
+}
+
+type TYPE_ORG_ACCEES_TOKEN_PAYLOAD {
+  organization: TYPE_ORGANIZATION_RESPONSE
+  profile: TYPE_USER_PROFILE
+  token: TYPE_ORG_ACCEES_TOKEN_PAYLOAD_TOKEN
+}
+
+type TYPE_ORG_ACCEES_TOKEN_PAYLOAD_TOKEN {
+  orgAccessToken: String
+  orgRefreshToken: String
+}
+
+type TYPE_ORG_CHILDREN {
+  code: String
+  message: String
+  payload: [TYPE_ORG_CHILDREN_PAYLOAD]
+}
+
+type TYPE_ORG_CHILDREN_PAYLOAD {
+  children: JSON
+  key: String
+  name: String
+  orgKey: String
+  path: String
+  title: String
+}
+
+type TYPE_ORG_TOKEN_REF {
+  code: String
+  message: String
+  payload: TYPE_ORG_TOKEN_REF_payload
+}
+
+type TYPE_ORG_TOKEN_REF_payload {
+  organization: TYPE_ORGANIZATION_RESPONSE
+  profile: TYPE_USER_PROFILE
+  ref: String
+}
+
+type TYPE_OTP {
+  countryCode: String
+  expire: String
+  phoneNumber: Number
+  ref: String
+}
+
+type TYPE_O_AUTH {
+  code: String
+  message: String
+  payload: TYPE_SCHEMA_O_AUTH
+}
+
+type TYPE_PAGINATION {
+  limit: Int
+  page: Int
+  totalItems: Int
+  totalPages: Int
+}
+
+type TYPE_PASSWORD_EMAIL {
+  email: String
+}
+
+type TYPE_PASSWORD_OTP {
+  countryCode: String!
+  phoneNumber: Number!
+}
+
+type TYPE_PERMISION_OPTION {
+  _id: ID
+  code: String
+  description: String
+  level: Number
+}
+
+type TYPE_PERMISSION_LIST {
+  code: String
+  message: String
+  payload: [TYPE_ROLE_PERMISSION]
+}
+
+type TYPE_PHONE {
+  code: String
+  value: Number
+  verifyStatus: ENUM_VERIFY_STATUS
+}
+
+type TYPE_PROFILE {
+  code: String
+  message: String
+  payload: TYPE_USER_PROFILE
+}
+
+type TYPE_PROFILE_LIST {
+  code: String
+  message: String
+  pagination: TYPE_PAGINATION
+  payload: [TYPE_USER_PROFILE]
+}
+
+type TYPE_REFRESH_ACCESS_TOKEN {
+  code: String
+  message: String
+  payload: TYPE_TOKEN
+}
+
+type TYPE_REQUEST_OTP {
+  code: String
+  message: String
+  payload: TYPE_OTP
+}
+
+type TYPE_RESET_PASSWORD_EMAIL {
+  code: String
+  message: String
+  payload: TYPE_PASSWORD_EMAIL
+}
+
+type TYPE_RESPONSE {
+  message: String
+  success: Boolean
+}
+
+type TYPE_ROLE {
+  attribute: JSON
+  isDefault: ENUM_IS
+  isInvite: ENUM_IS
+  isReplaceable: ENUM_IS
+  name: String
+  regisable: ENUM_IS
+  roleKey: String
+  roleType: ENUM_LRLE_TYPE
+  status: ENUM_APP_STATUS
+  userField: [JSON]
+}
+
+type TYPE_ROLE_APROVAL_ATTRIBUTE {
+  code: String
+  message: String
+  payload: TYPE_ROLE_APROVAL_ATTRIBUTE_SCHEMA
+}
+
+type TYPE_ROLE_APROVAL_ATTRIBUTE_LIST {
+  code: String
+  message: String
+  pagination: TYPE_PAGINATION
+  payload: [TYPE_ROLE_APROVAL_ATTRIBUTE_SCHEMA]
+}
+
+type TYPE_ROLE_APROVAL_ATTRIBUTE_ROLE {
+  _id: String
+  approval: ENUM_IS
+  approvalAttribute: JSON
+  isDefault: ENUM_IS
+  isReplaceable: ENUM_IS
+  name: String
+  needApproval: ENUM_IS
+  note: String
+  roleKey: String
+  roleType: String
+  status: ENUM_ROLE_APROVAL_ATTRIBUTE_STSTUS
+}
+
+type TYPE_ROLE_APROVAL_ATTRIBUTE_SCHEMA {
+  profile: TYPE_USER_PROFILE
+  roleList: [TYPE_ROLE_APROVAL_ATTRIBUTE_ROLE]
+}
+
+type TYPE_ROLE_DATA_SECURITY {
+  assign: ENUM_DATA_SECURITY
+  assignToParent: ENUM_IS
+  create: ENUM_DATA_SECURITY
+  delete: ENUM_DATA_SECURITY
+  name: String
+  read: ENUM_DATA_SECURITY
+  securityKey: String
+  write: ENUM_DATA_SECURITY
+}
+
+type TYPE_ROLE_DATA_SECURITY_LIST {
+  code: String
+  message: String
+  payload: TYPE_ROLE_DATA_SECURITY_PAYLOAD
+}
+
+type TYPE_ROLE_DATA_SECURITY_PAYLOAD {
+  dataSecurityList: [TYPE_ROLE_DATA_SECURITY]
+  role: TYPE_ROLE
+}
+
+type TYPE_ROLE_PERMISSION {
+  code: [String]
+  name: String
+  permissionKey: String
+  scopeList: [String]
+}
+
+type TYPE_ROLE_PERMISSION_LIST {
+  code: String
+  message: String
+  payload: TYPE_ROLE_PERMISSION_PAYLOAD
+}
+
+type TYPE_ROLE_PERMISSION_PAYLOAD {
+  permissionList: [TYPE_ROLE_PERMISSION]
+  role: TYPE_ROLE
+}
+
+type TYPE_ROLE_PERMISSION_SCHEMA {
+  code: [String]
+  permissionKey: String
+  scopeList: [String]
+}
+
+type TYPE_RUNNING_NUMBER {
+  code: String
+  message: String
+  payload: TYPE_SCHEMA_RUNNING_NUMBER
+}
+
+type TYPE_RUNNING_NUMBER_LIST {
+  code: String
+  message: String
+  payload: [TYPE_SCHEMA_RUNNING_NUMBER]
+}
+
+type TYPE_RUNNING_NUMBER_NO {
+  runningNo: String
+}
+
+type TYPE_S3_SIGNED_URL {
+  code: String
+  message: String
+  payload: [TYPE_SCHEMA_S3_SIGNED_URL]
+}
+
+type TYPE_SCHEMA_CUSTOM_MENU {
+  _id: String
+  actionColor: String
+  appKey: String
+  icon: String
+  menuKey: String
+  permissionList: [TYPE_SCHEMA_CUSTOM_MENU_PERMISSION_LIST]
+  status: ENUM_USABILITY
+  target: String
+  title: JSON
+  url: String
+}
+
+type TYPE_SCHEMA_CUSTOM_MENU_PERMISSION_LIST {
+  code: [String]
+  permissionKey: String
+}
+
+type TYPE_SCHEMA_GATEWAY {
+  _id: ID
+  apiType: String
+  destination: [String]
+  endpont: String
+  header: JSON
+  key: String
+  method: ENUM_GATEWAY_METHOD
+  name: String
+  queryString: JSON
+  resType: ENUM_GATEWAY_RES_TYPE
+  schema: JSON
+  source: [String]
+  status: ENUM_GATEWAY_STATUS
+  userRole: ENUM_GATEWAY_USER_ROLE
+  variable: JSON
+}
+
+type TYPE_SCHEMA_INVITE {
+  _id: ID
+  email: String
+  organization: TYPE_ORGANIZATION_RESPONSE
+  registered: ENUM_IS
+  roleKey: String
+  status: ENUM_INVITE_STATUS
+  userId: String
+}
+
+type TYPE_SCHEMA_O_AUTH {
+  appKey: String
+  loginStatus: ENUM_USABILITY
+  reauthentication: ENUM_USABILITY
+  redirectUrlList: [String]
+}
+
+type TYPE_SCHEMA_RUNNING_NUMBER {
+  attribute: JSON
+  createdBy: String
+  name: String
+  runningKey: String
+  runningNumberFormat: String
+  updatedBy: String
+}
+
+type TYPE_SCHEMA_S3_SIGNED_URL {
+  createdAt: Date
+  fileKey: String
+  filename: String
+  publicUrl: String
+  signedUrl: String
+  updatedAt: Date
+  user: TYPE_USER_PROFILE
+}
+
+type TYPE_SCHEMA_WEBHOOK {
+  count: Int
+  total: Int
+}
+
+type TYPE_SCMEMA_NOTIFICATION_TEMPLATE {
+  channel: ENUM_NOTIFICATION_CHANNEL!
+  dataKeyList: [TYPE_NOTIFICATION_DATA_KEY]
+  locale: String!
+  templateKey: String
+  templateValue: String
+  title: String
+}
+
+type TYPE_SERVICE {
+  adminPanelEndpoint: String
+  adminPanelMetaDataUrl: String
+  adminWidgetMetaDataUrl: String
+  dockerImageTag: String
+  endpoint: TYPE_ENDPOIN_SERVICE_TYPE
+  name: String
+  permissionList: [TYPE_SERVICE_PERMISSION]
+  serviceKey: String
+}
+
+type TYPE_SERVICE_INFO {
+  code: String
+  message: String
+  payload: TYPE_SERVICE
+}
+
+type TYPE_SERVICE_LIST {
+  code: String
+  message: String
+  pagination: TYPE_PAGINATION
+  payload: [TYPE_SERVICE]
+}
+
+type TYPE_SERVICE_LIST_PAYLOAD {
+  service: TYPE_SERVICE
+  syncStatus: String
+}
+
+type TYPE_SERVICE_PERMISSION {
+  defaultCode: String
+  name: String
+  permissionKey: String
+  scopeList: [String]
+  userType: String
+}
+
+type TYPE_SETTING {
+  _id: ID
+  description: String
+  key: String
+  value: String
+}
+
+type TYPE_SMTP {
+  host: String
+  password: String
+  port: Number
+  securedConnection: Boolean
+  senderEmail: String
+  senderName: String
+  username: String
+}
+
+type TYPE_SYNC_APP {
+  code: String
+  message: String
+  payload: [TYPE_SYNC_APP_PAYLOAD]
+}
+
+type TYPE_SYNC_APP_PAYLOAD {
+  app: TYPE_APP
+  serviceList: [TYPE_SERVICE_LIST_PAYLOAD]
+}
+
+type TYPE_SYNC_ORGANIZATION {
+  code: String
+  message: String
+  payload: [TYPE_SYNC_ORGANIZATION_PAYLOAD]
+}
+
+type TYPE_SYNC_ORGANIZATION_PAYLOAD {
+  organization: TYPE_ORGANIZATION_RESPONSE
+  syncStatus: String
+}
+
+type TYPE_SYNC_SERVICE_INFO {
+  code: String
+  message: String
+  payload: TYPE_SYNC_SERVICE_INFO_PAYLOAD
+}
+
+type TYPE_SYNC_SERVICE_INFO_PAYLOAD {
+  serviceList: [TYPE_SERVICE_LIST_PAYLOAD]
+}
+
+type TYPE_TEMPLATE {
+  _id: ID
+  content: String
+  keys: [TYPE_KEY]
+  name: String
+}
+
+type TYPE_THEME_FORM {
+  appKey: String
+  color: JSON
+  credentialKey: String
+  custom: JSON
+  image: JSON
+  isDefault: ENUM_THEME_DEFAULT_STATUS
+  isReplaceable: ENUM_THEME_REPLACEABLE_STATUS
+  name: String
+  status: ENUM_THEME_STATUS
+  text: JSON
+  themeKey: String
+  themeType: ENUM_THEME_TYPE
+}
+
+type TYPE_THEME_FORM_COLOR {
+  navAuthBg: String
+  navAuthText: String
+  navBg: String
+  navText: String
+  primary: String
+  secondary: String
+  titleText: String
+}
+
+type TYPE_THEME_FORM_IMAGE {
+  favIcon: String
+  navAuthCollapsedLogo: String
+  navAuthLogo: String
+  navLogo: String
+  webLogo: String
+}
+
+type TYPE_THEME_FORM_TEXT {
+  description: String
+  navTitle: String
+  webTitle: String
+}
+
+type TYPE_THEME_RESPONSE {
+  code: String
+  message: String
+  payload: TYPE_THEME_FORM
+}
+
+type TYPE_THEME_RESPONSE_LIST {
+  code: String
+  message: String
+  pagination: TYPE_PAGINATION
+  payload: [TYPE_THEME_FORM]
+}
+
+type TYPE_TOKEN {
+  accessToken: String
+  refreshToken: String
+}
+
+type TYPE_TOKEN_EXPIRED {
+  accessTokenExpired: Number
+  refreshTokenExpired: Number
+}
+
+type TYPE_TYPE_ROLE_PERMISSION_USER_LIST {
+  code: String
+  message: String
+  payload: [TYPE_ROLE_PERMISSION_SCHEMA]
+}
+
+type TYPE_UPDATE_CONFIG {
+  code: String
+  message: String
+  payload: TYPE_UPDATE_CONFIG_PAYLOAD
+}
+
+type TYPE_UPDATE_CONFIG_PAYLOAD {
+  config: TYPE_CONFIG
+  serviceList: [TYPE_SERVICE_LIST_PAYLOAD]
+}
+
+type TYPE_USERNAME_REGISTER {
+  code: String
+  message: String
+  payload: TYPE_USER_PROFILE
+}
+
+type TYPE_USER_PERMISSION {
+  defaultOption: String
+  permissionName: String
+  permissionOptions: [TYPE_PERMISION_OPTION]
+}
+
+type TYPE_USER_PROFILE {
+  _id: ID
+  appleId: String
+  attribute: JSON
+  email: [TYPE_EMAIL]
+  facebookId: String
+  googleId: String
+  lineId: String
+  phone: [TYPE_PHONE]
+  role: TYPE_ROLE
+  setting: JSON
+  username: String
+}
+
+type TYPE_VALUE_CONFIG_GLOBAL {
+  apiKey: String
+  bucket: String
+  headers: JSON
+  publicEndpoint: String
+  serviceEndpoint: String
+}
+
+type TYPE_VERIFY_EMAIL {
+  code: String
+  message: String
+  verifyId: String
+}
+
+type TYPE_VERIFY_PASSWORD_OTP {
+  code: String
+  message: String
+  payload: TYPE_PASSWORD_OTP
+}
+
+type TYPE_VERSION_CONTROL {
+  code: String
+  message: String
+  payload: TYPE_VERSION_CONTROL_SCHEMA
+}
+
+type TYPE_VERSION_CONTROL_LIST {
+  code: String
+  message: String
+  pagination: TYPE_PAGINATION
+  payload: [TYPE_VERSION_CONTROL_SCHEMA]
+}
+
+type TYPE_VERSION_CONTROL_SCHEMA {
+  _id: String
+  attribute: JSON
+  versionKey: String
+}
+
+type TYPE_WEBHOOK {
+  code: String
+  message: String
+  payload: TYPE_SCHEMA_WEBHOOK
+}
+
+"""
+The `Upload` scalar type represents a file upload.
+"""
+scalar Upload
