@@ -1,0 +1,20 @@
+mutation loginEmail(
+  $email: String!
+  $password: String!
+  $authType: ENUM_AUTH_TYPE!
+  $redirectUrl: String
+) {
+  loginEmail(
+    email: $email
+    password: $password
+    authType: $authType
+    redirectUrl: $redirectUrl
+  ) {
+    payload {
+      token {
+        accessToken
+        refreshToken
+      }
+    }
+  }
+}
