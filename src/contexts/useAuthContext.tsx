@@ -10,7 +10,7 @@ import { accessToken, clearStorage, refreshToken } from 'services/localStorage'
 
 import type { GetMyProfileData } from 'graphQL/types'
 
-interface AuthToken {
+export interface AuthToken {
   accessToken: string
   refreshToken: string
 }
