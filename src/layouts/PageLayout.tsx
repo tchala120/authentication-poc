@@ -6,8 +6,6 @@ import { Outlet } from 'react-router-dom'
 const PageLayout: FC = () => {
   return (
     <LayoutContainer>
-      <h1>Header page layout</h1>
-
       <Outlet />
     </LayoutContainer>
   )
@@ -16,7 +14,9 @@ const PageLayout: FC = () => {
 export default PageLayout
 
 const LayoutContainer = styled.div`
-  width: 1024px;
+  max-width: 1024px;
+  width: 100%;
   min-height: 100vh;
   margin: 0 auto;
+  padding: 24px;
 `
