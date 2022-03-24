@@ -16,6 +16,7 @@
     "graphql": "^16.3.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-router-dom": "6",
     "react-scripts": "5.0.0",
     "styled-components": "^5.3.3",
     "typescript": "^4.4.2",
@@ -52,15 +53,15 @@
     ]
   },
   "devDependencies": {
-    "@types/styled-components": "^5.1.24",
-    "husky": "^7.0.4",
-    "lint-staged": "^12.3.7",
-    "prettier": "2.6.0",
+    "@graphql-codegen/cli": "2.6.2",
+    "@graphql-codegen/introspection": "2.1.1",
     "@graphql-codegen/typescript": "2.4.8",
     "@graphql-codegen/typescript-operations": "2.3.5",
     "@graphql-codegen/typescript-react-apollo": "3.2.11",
-    "@graphql-codegen/introspection": "2.1.1",
-    "@graphql-codegen/cli": "2.6.2"
+    "@types/styled-components": "^5.1.24",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.3.7",
+    "prettier": "2.6.0"
   },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx,gql,graphql,css,yml,yaml}": "yarn format:project"
