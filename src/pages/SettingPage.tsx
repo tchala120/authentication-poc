@@ -10,6 +10,8 @@ const SettingPage: FC = () => {
     <div>
       <h1>Setting Page</h1>
 
+      <h1>Version: {process.env.REACT_APP_VERSION}</h1>
+
       <Button onClick={() => navigate('/profile')}>To profile page</Button>
     </div>
   )
