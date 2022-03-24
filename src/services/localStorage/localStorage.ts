@@ -27,12 +27,16 @@ export const version = {
   set: (value: string) => store.set(storageName.version, value),
 }
 
+export const clearStorage = () => {
+  store.clearAll()
+  version.set(storageVersion)
+}
+
 const setupStorage = () => {
   const currentVersion = version.get()
 
   if (currentVersion !== storageVersion) {
-    store.clearAll()
-    version.set(storageVersion)
+    clearStorage()
   }
 }
 
