@@ -33,7 +33,7 @@
     "format:operations": "prettier --write src/graphQL/generated/operations.ts",
     "codegen:schema": "DOTENV_CONFIG_PATH=./.env.local graphql-codegen -r dotenv/config --config codegen.json",
     "codegen:operations": "graphql-codegen --config codegen.yml && yarn format:operations",
-    "codegen": "graphql-codegen --config codegen.yml"
+    "codegen:all": "yarn codegen:schema && yarn codegen:operations"
   },
   "eslintConfig": {
     "extends": [
