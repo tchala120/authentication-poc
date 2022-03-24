@@ -1,0 +1,7 @@
+mutation registerEmail($input: INPUT_EMAIL_REGISTER_INPUT) {
+  registerEmail(input: $input) {
+    payload {
+      _id
+    }
+  }
+}
