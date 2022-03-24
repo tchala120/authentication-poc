@@ -51,7 +51,7 @@ export const AuthProvider: FC = ({ children }) => {
 
   const signOut = () => {
     clearStorage()
-    client.clearStore()
+    client.resetStore()
   }
 
   const loading = authLoading || getMyProfileResp.loading
