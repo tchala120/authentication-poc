@@ -4,4 +4,5 @@ export {
   accessToken,
   refreshToken,
   version,
+  clearStorage,
 } from './localStorage'
