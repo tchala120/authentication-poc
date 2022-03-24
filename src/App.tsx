@@ -5,6 +5,8 @@ import { ConfigProvider } from 'antd'
 
 import './global.css'
 
+import { AuthProvider } from 'contexts/useAuthContext'
+
 import setupStorage from 'services/localStorage'
 
 import PageRouter from 'setup/PageRouter'
@@ -15,14 +17,16 @@ setupStorage()
 const App: FC = () => {
   return (
     <ApolloProvider client={apolloClient}>
-      <ConfigProvider
-        form={{
-          colon: false,
-        }}
-        componentSize="large"
-      >
-        <PageRouter />
-      </ConfigProvider>
+      <AuthProvider>
+        <ConfigProvider
+          form={{
+            colon: false,
+          }}
+          componentSize="large"
+        >
+          <PageRouter />
+        </ConfigProvider>
+      </AuthProvider>
     </ApolloProvider>
   )
 }
