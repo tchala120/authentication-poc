@@ -8,6 +8,8 @@ import {
   Outlet,
 } from 'react-router-dom'
 
+import useAuthContext from 'contexts/useAuthContext'
+
 import PageLayout from 'layouts/PageLayout'
 
 import ProfilePage from 'pages/ProfilePage'
@@ -30,7 +32,7 @@ export const path: RoutePath = {
 }
 
 const PageRouter: FC = () => {
-  const user = undefined
+  const { user } = useAuthContext()
 
   const redirectTo = user == null ? '/sign-in' : '/profile'
 
