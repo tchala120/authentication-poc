@@ -2,37 +2,55 @@ import {
   ApolloClient,
   createHttpLink,
   from,
+  fromPromise,
   InMemoryCache,
 } from '@apollo/client'
 import { onError } from '@apollo/client/link/error'
 import { setContext } from '@apollo/client/link/context'
 
-import { accessToken } from 'services/localStorage'
-import { message } from 'antd'
+import { getHeaders, getToken } from './helpers'
 
 const httpLink = createHttpLink({
-  uri: process.env.REACT_APP_CORE_SERVER_URL,
+  uri: process.env.REACT_APP_CORE_SERVICE_URL,
 })
 
-const authLink = setContext((_, { headers }) => {
-  const token = accessToken.get()
+const authLink = setContext((_, { headers }) =>
+  getToken().then((newToken) => ({
+    headers: getHeaders(headers, newToken?.accessToken),
+  }))
+)
 
-  return {
-    headers: {
-      ...headers,
-      authorization: token != null ? `Bearer ${token}` : undefined,
-      credentialKey: 'MOE_SAFETY_CENTER_ADMIN_DEV',
-    },
+const errorLink = onError(
+  ({ graphQLErrors, networkError, operation, forward }) => {
+    if (graphQLErrors) {
+      for (let err of graphQLErrors) {
+        switch (err.extensions.code) {
+          case 'TOKEN_IS_EXPIRED':
+            console.log('Token is expired, try to call refresh token')
+
+            return fromPromise(
+              getToken().then((newToken) => {
+                operation.setContext({
+                  headers: getHeaders(
+                    operation.getContext().headers,
+                    newToken?.accessToken
+                  ),
+                })
+              })
+            )
+              .filter((values) => Boolean(values))
+              .flatMap(() => {
+                console.log('Retry the request!')
+
+                return forward(operation)
+              })
+        }
+      }
+    }
+
+    if (networkError) console.log(`[Network error]: ${networkError}`)
   }
-})
-
-const errorLink = onError(({ graphQLErrors, networkError }) => {
-  if (graphQLErrors) {
-    graphQLErrors.forEach((error) => message.error(error.message))
-  }
-
-  if (networkError) console.log(`[Network error]: ${networkError}`)
-})
+)
 
 const apolloClient = new ApolloClient({
   link: from([authLink, errorLink, httpLink]),
