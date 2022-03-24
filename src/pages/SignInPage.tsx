@@ -10,14 +10,18 @@ import {
   useLoginEmailMutation,
 } from 'graphQL/generated/operations'
 
+import useAuthContext from 'contexts/useAuthContext'
+
 import { path } from 'setup/PageRouter'
 
 import { baseFormProps } from 'helper/antdUtils'
 
 const SignInPage: FC = () => {
+  const { signIn } = useAuthContext()
+
   const [loginEmail, loginEmailResp] = useLoginEmailMutation({
     onCompleted(resp) {
-      console.log(resp.loginEmail.payload)
+      signIn(resp.loginEmail.payload.token)
     },
   })
 
