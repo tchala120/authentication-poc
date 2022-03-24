@@ -1,6 +1,7 @@
 import type { FC } from 'react'
 
 import { ApolloProvider } from '@apollo/client'
+import { ConfigProvider } from 'antd'
 
 import './global.css'
 
@@ -14,7 +15,14 @@ setupStorage()
 const App: FC = () => {
   return (
     <ApolloProvider client={apolloClient}>
-      <PageRouter />
+      <ConfigProvider
+        form={{
+          colon: false,
+        }}
+        componentSize="large"
+      >
+        <PageRouter />
+      </ConfigProvider>
     </ApolloProvider>
   )
 }
