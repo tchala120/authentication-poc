@@ -1,7 +1,7 @@
 {
   "name": "authentication-poc",
   "description": "The authentication poc for hooray site",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.5.10",
